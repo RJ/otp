@@ -1,3 +1,31 @@
+RJ's FORK NOTES
+===============
+Sick of pasting debug output into the erlang shell only to have it choke on
+pids, since list\_to\_pid gives: `<1.2.3>`, which isn't a valid erlang term.
+
+I've changed list\_to\_pid to return pid(1,2,3) and pid\_to\_list to accept it:
+
+Erlang R15B (erts-5.9) [source] [smp:4:4] [rq:4] [async-threads:0] [hipe]
+[kernel-poll:false]
+
+<pre>
+Eshell V5.9  (abort with ^G)
+1> pid_to_list(self()).
+"pid(0,31,0)"
+2> list_to_pid(v(1)).
+pid(0,31,0)
+3> erlang:is_process_alive(v(2)).
+true
+4> io:format("my pid is: ~w~n",[self()]).
+my pid is: pid(0,31,0)
+ok
+5> list_to_pid("&lt;0.31.0&gt;").  %% Old format still accepted
+pid(0,31,0)
+
+</pre>
+
+
+
 Erlang/OTP
 ==========
 
