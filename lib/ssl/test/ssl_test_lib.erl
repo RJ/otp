@@ -40,7 +40,7 @@ run_where(_) ->
     ClientNode = node(),
     ServerNode = node(),
     {ok, Host} = rpc:call(ServerNode, inet, gethostname, []),
-    {ClientNode, ServerNode, Host}.
+    {ClientNode, ServerNode, "127.0.0.1"}.
 
 run_where(_, ipv6) ->
     ClientNode = node(),
