@@ -3791,23 +3791,47 @@ BIF_RETTYPE list_to_pid_1(BIF_ALIST_1)
     buf[i] = '\0';		/* null terminal */
 
     cp = buf;
-    if (*cp++ != '<') goto bad;
-    
-    if (*cp < '0' || *cp > '9') goto bad;
-    while(*cp >= '0' && *cp <= '9') { a = 10*a + (*cp - '0'); cp++; }
+    switch (*cp++) {
+        case 'p': // pid(1,2,3)
+            if (*cp++ != 'i') goto bad;
+            if (*cp++ != 'd') goto bad;
+            if (*cp++ != '(') goto bad;
+            if (*cp < '0' || *cp > '9') goto bad;
+            while(*cp >= '0' && *cp <= '9') { a = 10*a + (*cp - '0'); cp++; }
 
-    if (*cp++ != '.') goto bad;
+            if (*cp++ != ',') goto bad;
 
-    if (*cp < '0' || *cp > '9') goto bad;
-    while(*cp >= '0' && *cp <= '9') { b = 10*b + (*cp - '0'); cp++; }
+            if (*cp < '0' || *cp > '9') goto bad;
+            while(*cp >= '0' && *cp <= '9') { b = 10*b + (*cp - '0'); cp++; }
 
-    if (*cp++ != '.') goto bad;
+            if (*cp++ != ',') goto bad;
 
-    if (*cp < '0' || *cp > '9') goto bad;
-    while(*cp >= '0' && *cp <= '9') { c = 10*c + (*cp - '0'); cp++; }
+            if (*cp < '0' || *cp > '9') goto bad;
+            while(*cp >= '0' && *cp <= '9') { c = 10*c + (*cp - '0'); cp++; }
 
-    if (*cp++ != '>') goto bad;
-    if (*cp != '\0') goto bad;
+            if (*cp++ != ')') goto bad;
+            if (*cp != '\0') goto bad;
+            break;
+        case '<': // <1.2.3>
+            if (*cp < '0' || *cp > '9') goto bad;
+            while(*cp >= '0' && *cp <= '9') { a = 10*a + (*cp - '0'); cp++; }
+
+            if (*cp++ != '.') goto bad;
+
+            if (*cp < '0' || *cp > '9') goto bad;
+            while(*cp >= '0' && *cp <= '9') { b = 10*b + (*cp - '0'); cp++; }
+
+            if (*cp++ != '.') goto bad;
+
+            if (*cp < '0' || *cp > '9') goto bad;
+            while(*cp >= '0' && *cp <= '9') { c = 10*c + (*cp - '0'); cp++; }
+
+            if (*cp++ != '>') goto bad;
+            if (*cp != '\0') goto bad;
+            break;
+        default: // that's no pid
+            goto bad;
+    }
 
     erts_free(ERTS_ALC_T_TMP, (void *) buf);
     buf = NULL;

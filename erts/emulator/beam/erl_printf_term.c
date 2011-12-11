@@ -371,16 +371,16 @@ print_term(fmtfn_t fn, void* arg, Eterm obj, long *dcount,
 	    break;
 	case PID_DEF:
 	case EXTERNAL_PID_DEF:
-	    PRINT_CHAR(res, fn, arg, '<');
+	    PRINT_STRING(res, fn, arg, "pid(");
 	    PRINT_ULONG(res, fn, arg, 'u', 0, 1,
 			(unsigned long) pid_channel_no(wobj));
-	    PRINT_CHAR(res, fn, arg, '.');
+	    PRINT_CHAR(res, fn, arg, ',');
 	    PRINT_ULONG(res, fn, arg, 'u', 0, 1,
 			(unsigned long) pid_number(wobj));
-	    PRINT_CHAR(res, fn, arg, '.');
+	    PRINT_CHAR(res, fn, arg, ',');
 	    PRINT_ULONG(res, fn, arg, 'u', 0, 1,
 			(unsigned long) pid_serial(wobj));
-	    PRINT_CHAR(res, fn, arg, '>');
+	    PRINT_CHAR(res, fn, arg, ')');
 	    break;
 	case PORT_DEF:
 	case EXTERNAL_PORT_DEF:
