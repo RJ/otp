@@ -34,13 +34,6 @@
     <p>The <c><![CDATA[erl]]></c> program starts an Erlang runtime system.
       The exact details (for example, whether <c><![CDATA[erl]]></c> is a script or
       a program and which other programs it calls) are system-dependent.</p>
-    <p>Windows users probably wants to use the <c><![CDATA[werl]]></c> program
-      instead, which runs in its own window with scrollbars and supports
-      command-line editing. The <c><![CDATA[erl]]></c> program on Windows provides
-      no line editing in its shell, and on Windows 95 there is no way
-      to scroll back to text which has scrolled off the screen.
-      The <c><![CDATA[erl]]></c> program must be used, however, in pipelines or if
-      you want to redirect standard input or output.</p>
       <note><p>As of ERTS version 5.8 (OTP-R14A) the runtime system will by
                default bind schedulers to logical processors using the
 	       <c>default_bind</c> bind type if the amount of schedulers are
